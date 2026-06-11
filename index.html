@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#023059">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>KİM MİYİM?</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css?v=11">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Arkaplan dekorasyon -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- ── EKRAN 1: Ana Sayfa ─────────────────────────────────────────────── -->
+  <div id="screen-home" class="screen active">
+    <div class="home-inner">
+
+      <h1 class="brand">KİM MİYİM?</h1>
+
+      <!-- Mod Karuzeli -->
+      <div class="mode-carousel-wrap" id="mode-carousel-wrap">
+        <div class="mode-carousel-inner" id="mode-carousel-inner">
+          <div class="mode-card" data-mode="0">
+            <span class="mode-card-icon">🪐</span>
+            <span class="mode-card-label">Gezegen Yaşı</span>
+          </div>
+          <div class="mode-card active" data-mode="1">
+            <span class="mode-card-icon">📅</span>
+            <span class="mode-card-label">Doğum Tarihi</span>
+          </div>
+          <div class="mode-card" data-mode="2">
+            <span class="mode-card-icon">📱</span>
+            <span class="mode-card-label">Ekran Süresi</span>
+          </div>
+        </div>
+        <div class="mode-dots" id="mode-dots">
+          <span class="mode-dot active"></span>
+          <span class="mode-dot"></span>
+          <span class="mode-dot"></span>
+        </div>
+      </div>
+
+      <p class="subtitle" id="mode-subtitle">Doğum tarihinizi seçin</p>
+
+      <!-- Picker Zone: sabit yükseklik, moda göre içerik değişir -->
+      <div class="picker-zone">
+
+        <!-- Mod 0: Doğum Tarihi -->
+        <div id="picker-root">
+          <div class="picker-highlight"></div>
+          <div class="picker-col" id="col-day">
+            <div class="picker-col-label">Gün</div>
+            <div id="col-day-drum"></div>
+          </div>
+          <div class="picker-col" id="col-month">
+            <div class="picker-col-label">Ay</div>
+            <div id="col-month-drum"></div>
+          </div>
+          <div class="picker-col" id="col-year">
+            <div class="picker-col-label">Yıl</div>
+            <div id="col-year-drum"></div>
+          </div>
+        </div>
+
+        <!-- Mod 1: Ekran Süresi -->
+        <div id="picker-screen-time">
+          <div class="picker-highlight"></div>
+          <div class="picker-col" id="col-hours">
+            <div class="picker-col-label">Saat / Gün</div>
+            <div id="col-hours-drum"></div>
+          </div>
+          <div class="picker-col" id="col-age">
+            <div class="picker-col-label">Kaç Yıldır</div>
+            <div id="col-age-drum"></div>
+          </div>
+        </div>
+
+        <!-- Mod 2: Gezegen Yaşı (4 kolon: Gün / Ay / Yıl / Gezegen) -->
+        <div id="picker-planet-mode">
+          <div class="picker-highlight"></div>
+          <div class="picker-col" id="col-pday">
+            <div class="picker-col-label">Gün</div>
+            <div id="col-pday-drum"></div>
+          </div>
+          <div class="picker-col" id="col-pmonth">
+            <div class="picker-col-label">Ay</div>
+            <div id="col-pmonth-drum"></div>
+          </div>
+          <div class="picker-col" id="col-pyear">
+            <div class="picker-col-label">Yıl</div>
+            <div id="col-pyear-drum"></div>
+          </div>
+          <div class="picker-col" id="col-planet">
+            <div class="picker-col-label">Gezegen</div>
+            <div id="col-planet-drum"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <button id="btn-calculate" class="btn-primary">
+        KİM MİYİM?
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ── EKRAN 2: Yükleniyor ────────────────────────────────────────────── -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-inner">
+      <div class="ekg-wrap">
+        <canvas id="ekg-canvas"></canvas>
+      </div>
+      <div class="loading-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="loading-text">Senin hikayen hesaplanıyor…</p>
+    </div>
+  </div>
+
+  <!-- ── EKRAN 3: Sonuçlar ──────────────────────────────────────────────── -->
+  <div id="screen-results" class="screen">
+
+    <div class="results-header">
+      <button id="btn-back" class="btn-back">← Geri</button>
+      <h2 class="results-title">Senin Hikayen</h2>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="past">YAŞADIKLARIM</button>
+      <button class="tab-btn" data-tab="future">GÖRECEKLERİM</button>
+    </div>
+
+    <!-- Geçmiş istatistikler -->
+    <div id="tab-past" class="tab-panel active"></div>
+
+    <!-- Gelecek istatistikler -->
+    <div id="tab-future" class="tab-panel"></div>
+
+    <!-- İndir butonu -->
+    <div class="download-bar">
+      <button id="btn-download" class="btn-download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Hikaye Olarak İndir</span>
+      </button>
+    </div>
+
+  </div>
+
+</div><!-- #app -->
+
+<!-- ── İsim Modali ─────────────────────────────────────────────────────── -->
+<div id="name-modal" class="name-modal-overlay">
+  <div class="name-modal-card">
+    <div class="name-modal-handle"></div>
+    <p class="name-modal-title">Hikayene imzanı at ✍️</p>
+    <p class="name-modal-sub">İsteğe bağlı — boş bırakabilirsin</p>
+    <input type="text" id="name-input" class="name-input" placeholder="Adın Soyadın" maxlength="30" autocomplete="off">
+    <button class="btn-primary name-confirm-btn" id="name-confirm">Hikayeyi Oluştur</button>
+  </div>
+</div>
+
+<!-- ── Yaşam Beklentisi Modali ─────────────────────────────────────────── -->
+<div id="life-modal" class="life-modal-overlay">
+  <div class="life-modal-card">
+    <div class="life-modal-handle"></div>
+    <p class="life-modal-title">Kaç yıl yaşayacağını<br>düşünüyorsun?</p>
+    <div class="life-counter">
+      <button class="life-count-btn" id="life-minus">−</button>
+      <div class="life-number-wrap">
+        <span id="life-number">80</span>
+        <span class="life-unit">yıl</span>
+      </div>
+      <button class="life-count-btn" id="life-plus">+</button>
+    </div>
+    <button class="btn-primary life-confirm" id="life-confirm">Hesapla</button>
+    <p class="life-note">Ortalama dünya ömrü yaklaşık 73 yıl</p>
+  </div>
+</div>
+
+<script>fetch('count.php').catch(function(){});</script>
+<script src="js/eclipses.js?v=7"></script>
+<script src="js/picker.js?v=7"></script>
+<script src="js/calculator.js?v=8"></script>
+<script src="js/share.js?v=8"></script>
+<script src="js/app.js?v=13"></script>
+</body>
+</html>
